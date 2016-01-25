@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse">
 
         <ul class="nav navbar-nav">
-          <li><a href="#"><i class="fa fa-plus"></i> Submit Post</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Submit Post</a></li>
           <li>
             <form class="navbar-form" role="search">
               <div class="form-group">
@@ -43,6 +43,39 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">New Post</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" name="title" placeholder="Super awesome post" required>
+            </div>
+            <div class="form-group">
+              <label for="author">Author</label>
+              <input type="text" class="form-control" name="author" placeholder="Who are you?" required>
+            </div>
+            <div class="form-group">
+              <label for="image">Image (URL)</label>
+              <input type="text" class="form-control" name="image" placeholder="A picture" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" class="form-control" name="description" placeholder="Description" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div ng-controller="PostsController" class="container-fluid">
     <div class="row" ng-repeat="post in $storage.posts">
