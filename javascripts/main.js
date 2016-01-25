@@ -1,6 +1,6 @@
-var redditApp = angular.module('redditApp', ['ngStorage']);
+var redditApp = angular.module('redditApp', ['ngStorage', 'ui.bootstrap']);
 
-redditApp.controller('PostsController', function($scope, $localStorage) {
+redditApp.controller('PostsController', function($scope, $localStorage, $uibModal) {
   $scope.$storage = $localStorage.$default({
     "posts" : [{
       "title": "My best friend",
@@ -11,4 +11,30 @@ redditApp.controller('PostsController', function($scope, $localStorage) {
       "comments": []
     }]
   });
+
+  $scope.open = function (size) {
+    var modalInstance = $uibModal.open({
+      templateUrl: 'newPost.html',
+      controller: 'ModalInstanceCtrl',
+      resolve: {
+        storage: function () {
+          return $scope.$storage;
+        }
+      }
+    });
+  }
+});
+
+
+
+angular.module('redditApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, storage) {
+
+  $scope.submit = function (postForm) {
+    console.log(storage)
+    // post.votes = 0;
+    // post.comments = [];
+    // $scope.$storage.posts.push(post);
+    // $scope.submitted = true;
+    //$uibModalInstance.dismiss('cancel');
+  };
 });

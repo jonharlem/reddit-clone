@@ -5,13 +5,13 @@
   <title>Reddit Clone</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-animate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.js"></script>
+  <script type="text/javascript" src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
   <script type="text/javascript" src="javascripts/main.js"></script>
 </head>
-<body ng-app="redditApp">
+<body ng-app="redditApp" ng-controller="PostsController">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse">
 
         <ul class="nav navbar-nav">
-          <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Submit Post</a></li>
+          <li><a href="#" ng-click="open()" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Submit Post</a></li>
           <li>
             <form class="navbar-form" role="search">
               <div class="form-group">
@@ -45,39 +45,36 @@
   </nav>
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">New Post</h4>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control" name="title" placeholder="Super awesome post" required>
-            </div>
-            <div class="form-group">
-              <label for="author">Author</label>
-              <input type="text" class="form-control" name="author" placeholder="Who are you?" required>
-            </div>
-            <div class="form-group">
-              <label for="image">Image (URL)</label>
-              <input type="text" class="form-control" name="image" placeholder="A picture" required>
-            </div>
-            <div class="form-group">
-              <label for="description">Description</label>
-              <input type="text" class="form-control" name="description" placeholder="Description" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
+  <script type="text/ng-template" id="newPost.html">
+    <div class="modal-header">
+        <h3 class="modal-title">New post</h3>
     </div>
-  </div>
+    <div class="modal-body">
+        <form name="postForm">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" ng-model="title" name="title" placeholder="Super awesome post" required>
+          </div>
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" class="form-control" ng-model="author" name="author" placeholder="Who are you?" required>
+          </div>
+          <div class="form-group">
+            <label for="image">Image (URL)</label>
+            <input type="url" class="form-control" ng-model="image" name="image" placeholder="A picture" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" ng-model="description" name="description" placeholder="Description" required>
+          </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="submit(postForm)" type="submit">Submit</button>
+    </div>
+  </script>
 
-  <div ng-controller="PostsController" class="container-fluid">
+  <div  class="container-fluid">
     <div class="row" ng-repeat="post in $storage.posts">
       {{ post }}
     </div>
