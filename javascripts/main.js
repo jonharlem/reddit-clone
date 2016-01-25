@@ -1,6 +1,8 @@
-var redditApp = angular.module('redditApp', ['ngStorage', 'ui.bootstrap']);
+var redditApp = angular.module('redditApp', ['ngStorage', 'ui.bootstrap', 'angularMoment']);
 
 redditApp.controller('PostsController', function($scope, $localStorage, $uibModal) {
+  $scope.post = {};
+
   $scope.$storage = $localStorage.$default({
     "posts" : [{
       "title": "My best friend",
@@ -8,11 +10,12 @@ redditApp.controller('PostsController', function($scope, $localStorage, $uibModa
       "image": "http://vignette2.wikia.nocookie.net/harrypotter/images/1/18/Hedwig_books.png/revision/latest?cb=20150601043532",
       "description": "Seriously, there could not be a cooler owl.",
       "votes": 0,
-      "comments": []
+      "comments": [],
+      "date": new Date()
     }]
   });
 
-  $scope.open = function (size) {
+  $scope.open = function () {
     var modalInstance = $uibModal.open({
       templateUrl: 'newPost.html',
       controller: 'ModalInstanceCtrl',
@@ -25,16 +28,20 @@ redditApp.controller('PostsController', function($scope, $localStorage, $uibModa
   }
 });
 
-
-
 angular.module('redditApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, storage) {
 
   $scope.submit = function (postForm) {
-    console.log(storage)
-    // post.votes = 0;
-    // post.comments = [];
-    // $scope.$storage.posts.push(post);
-    // $scope.submitted = true;
-    //$uibModalInstance.dismiss('cancel');
+    if (postForm.$valid) {
+      storage.posts.push({
+        title: postForm.title.$modelValue,
+        author: postForm.author.$modelValue,
+        image: postForm.image.$modelValue,
+        description: postForm.description.$modelValue,
+        votes: 0,
+        comments: [],
+        date: new Date()
+      });
+      $uibModalInstance.dismiss('cancel');
+    }
   };
 });
