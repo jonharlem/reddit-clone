@@ -2,6 +2,10 @@ var redditApp = angular.module('redditApp', ['ngStorage', 'ui.bootstrap', 'angul
 
 redditApp.controller('PostsController', function($scope, $localStorage, $uibModal) {
   $scope.post = {};
+  $scope.newComment = {};
+  $scope.hideForm = true;
+  $scope.hideComments = true;
+  $scope.orderChoice = "-votes";
 
   $scope.$storage = $localStorage.$default({
     "posts" : [{
@@ -25,6 +29,12 @@ redditApp.controller('PostsController', function($scope, $localStorage, $uibModa
         }
       }
     });
+  }
+
+  $scope.submitComment = function(commentForm, post) {
+    if (commentForm.$valid) {
+      post.comments.push($scope.newComment);
+    }
   }
 });
 
